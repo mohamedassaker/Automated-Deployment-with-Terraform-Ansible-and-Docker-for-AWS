@@ -1,0 +1,10 @@
+- name: Ensure ssh port open
+  wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 10
+    timeout: 120
+    search_regex: OpenSSH
+  vars:
+    ansible_connection: local
+    ansible_python_interpreter: /usr/bin/python

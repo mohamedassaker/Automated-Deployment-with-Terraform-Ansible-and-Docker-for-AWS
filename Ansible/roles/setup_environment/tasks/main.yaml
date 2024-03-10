@@ -1,0 +1,26 @@
+- name: Make sure python3 and docker are installed
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  yum:
+    name: 
+      - python3
+      - docker
+    update_cache: yes
+    state: present
+
+- name: Install docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.24.7/docker-compose-{{lookup('pipe', 'uname -s')}}-{{lookup('pipe', 'uname -m')}}"
+    dest: /usr/local/bin/docker-compose
+    mode: +x
+
+- name: Ensure docker is running
+  systemd:
+    name: docker
+    state: started
+
+- name: Install docker python module
+  pip:
+    name:
+      - docker
+      - docker-compose

@@ -1,0 +1,8 @@
+version: 1.0.0
+node_file_path: /Users/mohamed-assaker/nodejs-app
+linux_user: nodejs-user
+destination_path: /home/{{linux_user}}
+user_groups: adm,docker
+docker_username: "username"
+docker_password: "password"
+docker_registry: "https://index.docker.io/v1/"

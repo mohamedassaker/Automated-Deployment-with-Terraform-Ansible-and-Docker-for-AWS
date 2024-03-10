@@ -1,0 +1,33 @@
+---
+- name: Wait for ssh connection to be available
+  hosts: aws_ec2
+  become: yes
+  gather_facts: False
+  roles:
+    - role: check_ssh
+
+- name: Install python3, docker and docker-compose
+  hosts: aws_ec2
+  become: yes
+  gather_facts: False
+  roles:
+    - role: setup_environment
+
+- name: Create and add new user to docker group
+  hosts: aws_ec2
+  become: yes
+  vars_files:
+    - deploy-docker-vars
+  roles:
+    - role: create_user
+
+
+- name: Start docker container
+  hosts: aws_ec2
+  become: yes
+  become_user: "{{ linux_user }}"
+  vars_files:
+    - deploy-docker-vars
+  roles:
+    - role: start_container
+
